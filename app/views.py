@@ -66,66 +66,21 @@ def register():
     return render_template('registration.html', title='Register', form=form)
 
 
-@app.route('/upload_students', methods=['GET', 'POST'])
+@app.route('/recommend', methods=['GET', 'POST'])
 @login_required
-def upload_students():
-    form = UploadStudentsForm()
-    if form.validate_on_submit():
-        if form.student_file.data:
-            unique_str = str(uuid4())
-            filename = secure_filename(f'{unique_str}-{form.student_file.data.filename}')
-            filepath = os.path.join(app.config['UPLOAD_FOLDER'], filename)
-            form.student_file.data.save(filepath)
-            try:
-                with open(filepath, newline='') as csvfile:
-                    reader = csv.reader(csvfile)
-                    error_count = 0
-                    row = next(reader)
-                    if row != ['Username', 'Email', 'Firstname', 'Lastname']:
-                        form.student_file.errors.append(
-                            'First row of file must be a Header row containing "Username,Email,Firstname,Lastname"')
-                        raise ValueError()
-                    for idx, row in enumerate(reader):
-                        row_num = idx+2 # Spreadsheets have the first row as 1, and we skip the header
-                        if error_count > 10:
-                            form.student_file.errors.append('Too many errors found, any further errors omitted')
-                            raise ValueError()
-                        if len(row) != 4:
-                            form.student_file.errors.append(f'Row {row_num} does not have precisely 4 fields')
-                            error_count += 1
-                        if Student.query.filter_by(username=row[0]).first():
-                            form.student_file.errors.append(
-                                f'Row {row_num} has username {row[0]}, which is already in use')
-                            error_count += 1
-                        if not is_valid_email(row[1]):
-                            form.student_file.errors.append(f'Row {row_num} has an invalid email: "{row[1]}"')
-                            error_count += 1
-                        if Student.query.filter_by(email=row[1]).first():
-                            form.student_file.errors.append(
-                                f'Row {row_num} has email {row[1]}, which is already in use')
-                            error_count += 1
-                        if error_count == 0:
-                            student = Student(username=row[0], email=row[1], firstname=row[2], lastname=row[3])
-                            db.session.add(student)
-                if error_count > 0:
-                    raise ValueError
-                db.session.commit()
-                flash(f'New Students Uploaded', 'success')
-
-                return redirect(url_for('index'))
-            except Exception as e:
-                flash(f'New students upload failed, please try again: {e}', 'danger')
-                db.session.rollback()
-            finally:
-                silent_remove(filepath)
-    return render_template('upload_students.html', title='Upload Students', form=form)
+def recommend():
+    return render_template('recommend.html', title='Upload Students', form=form)
 
 
-@app.route('/view_user', methods=['GET', 'POST'])
+@app.route('/my_films', methods=['GET', 'POST'])
 @login_required
-def view_user():
-    user_id = current_user.user_id
-    return render_template('view_user.html', title='View User', user_id=user_id)
+def my_films():
+    return render_template('my_films.html', title='View User', user_id=user_id)
+
+
+@app.route('/about', methods=['GET', 'POST'])
+def about():
+    return render_template('about.html')
 
 
 def is_valid_email(email):

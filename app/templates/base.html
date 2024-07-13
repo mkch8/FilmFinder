@@ -15,29 +15,47 @@
 </head>
 <body>
 <header class="site-header">
-    <nav class="navbar navbar-expand-sm navbar-dark bg-dark ">
+    <nav class="navbar navbar-expand-sm navbar-dark bg-dark">
         <div class="container-fluid">
+            <a class="navbar-brand" href="{{ url_for('index') }}">FilmFinder</a>
             <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarToggle">
                 <span class="navbar-toggler-icon"></span>
             </button>
             <div class="collapse navbar-collapse" id="navbarToggle">
-                <div class="navbar-nav me-auto">
-                    <a class="nav-item nav-link" href="{{ url_for('index') }}">Home</a>
-                    <a class="nav-item nav-link" href="{{ url_for('upload_students') }}">Upload</a>
-                    <a class="nav-item nav-link" href="{{ url_for('view_user') }}">View User</a>
-                </div>
-                <div class="navbar-nav">
+                <ul class="navbar-nav me-auto mb-2 mb-sm-0">
+                    <li class="nav-item">
+                        <a class="nav-link" href="{{ url_for('recommend') }}">Recommend!</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="{{ url_for('my_films') }}">My Films</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="{{ url_for('about') }}">About</a>
+                    </li>
+                </ul>
+                <form class="d-flex" id="search-form">
+                    <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search" id="search-input">
+                    <button class="btn btn-outline-success" type="submit">Search</button>
+                </form>
+                <ul class="navbar-nav ms-auto">
                     {% if current_user.is_anonymous %}
-                        <a class="nav-item nav-link" href="{{ url_for('login') }}">Login</a>
-                        <a class="nav-item nav-link" href="{{ url_for('register') }}">Register</a>
+                        <li class="nav-item">
+                            <a class="nav-link" href="{{ url_for('login') }}">Login</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="{{ url_for('register') }}">Register</a>
+                        </li>
                     {% else %}
-                        <a class="nav-item nav-link" href="{{ url_for('logout') }}">Logout {{ current_user.username }}</a>
+                        <li class="nav-item">
+                            <a class="nav-link" href="{{ url_for('logout') }}">Logout {{ current_user.username }}</a>
+                        </li>
                     {% endif %}
-                </div>
+                </ul>
             </div>
         </div>
     </nav>
 </header>
+
 
 <main role="main" class="container">
     {% with messages = get_flashed_messages(with_categories=true) %}

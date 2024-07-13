@@ -37,7 +37,6 @@ class Student(db.Model):
     lastname = db.Column(db.String(32), nullable=False, index=True)
     email = db.Column(db.String(64), nullable=False, unique=True, index=True)
     active = db.Column(db.Boolean, nullable=False, default=True)
-    # loans = db.relationship('Loan', backref='student', lazy='dynamic')
 
     def __repr__(self):
         return f"student(id='{self.student_id}', '{self.username}', '{self.lastname}', '{self.firstname}' , '{self.email}', active='{self.active}')"

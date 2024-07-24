@@ -1,0 +1,28 @@
+{% extends "base.html" %}
+
+{% block content %}
+<head>
+    <meta charset="UTF-8">
+    <title>{{ film.title }}</title>
+</head>
+<body>
+    <h1>{{ film.title }}</h1>
+    <img src="{{ poster_path }}" alt="{{ film.title }} Poster">
+    <p><strong>Release Date:</strong> {{ film.release_date }}</p>
+    <p><strong>Overview:</strong> {{ film.overview }}</p>
+    <p><strong>Genres:</strong> {{ film.genres }}</p>
+
+    {% if user_logged_in %}
+        <p><strong>Your Rating:</strong> {{ user_rating.rating if user_rating else 'Not rated yet' }}</p>
+        <form method="post">
+            <label for="rating">Rate this movie (1-10):</label>
+            <input type="number" id="rating" name="rating" min="1" max="10" required>
+            <button type="submit">Submit Rating</button>
+        </form>
+    {% else %}
+        <p><a href="{{ url_for('login') }}">Log in</a> to rate this movie.</p>
+    {% endif %}
+
+    <a href="{{ url_for('index') }}">Back to Home</a>
+</body>
+{% endblock %}

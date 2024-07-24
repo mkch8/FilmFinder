@@ -1,7 +1,7 @@
-from flask import render_template, redirect, url_for, flash, request
+from flask import render_template, redirect, url_for, flash, request, jsonify
 from app import app, db
-from app.forms import (LoginForm, RegistrationForm, UploadStudentsForm)
-from app.models import User, Student
+from app.forms import (LoginForm, RegistrationForm)
+from app.models import User, UserRatings, Films
 from flask_login import current_user, login_user, logout_user, login_required
 from urllib.parse import urlsplit
 from uuid import uuid4
@@ -66,21 +66,61 @@ def register():
     return render_template('registration.html', title='Register', form=form)
 
 
+@app.route('/search', methods=['GET', 'POST'])
+def search():
+    query = request.args.get('query')
+    if query:
+        results = Films.query.filter(Films.title.ilike(f'%{query}%')).all()
+        results = [{"id": film.movie_id, "title": film.title} for film in results]
+    else:
+        results = []
+    return jsonify(results)
+
+
 @app.route('/recommend', methods=['GET', 'POST'])
 @login_required
 def recommend():
-    return render_template('recommend.html', title='Upload Students', form=form)
+    return render_template('recommend.html', title='Recommend')
 
 
 @app.route('/my_films', methods=['GET', 'POST'])
 @login_required
 def my_films():
-    return render_template('my_films.html', title='View User', user_id=user_id)
+    user_ratings = UserRatings.query.filter_by(user_id=current_user.user_id).all()
+    film_ids = [rating.movie_id for rating in user_ratings]
+    films = Films.query.filter(Films.movie_id.in_(film_ids)).all()
+
+    ratings_dict = {rating.movie_id: rating.rating for rating in user_ratings}
+
+    return render_template('my_films.html', films=films, ratings_dict=ratings_dict)
 
 
 @app.route('/about', methods=['GET', 'POST'])
 def about():
     return render_template('about.html')
+
+@app.route('/film/<int:film_id>', methods=['GET', 'POST'])
+def film_page(film_id):
+    film = Films.query.get_or_404(film_id)
+    user_rating = None
+    poster_path = 'https://image.tmdb.org/t/p/w500/' + film.poster_path
+
+    if request.method == 'POST' and current_user.is_authenticated:
+        rating = int(request.form['rating'])
+        user_rating = UserRatings.query.filter_by(user_id=current_user.user_id, movie_id=film_id).first()
+        if user_rating:
+            user_rating.rating = rating
+        else:
+            user_rating = UserRatings(user_id=current_user.user_id, movie_id=film_id, rating=rating)
+            db.session.add(user_rating)
+        db.session.commit()
+        return redirect(url_for('film_page', film_id=film_id))
+
+    if current_user.is_authenticated:
+        user_rating = UserRatings.query.filter_by(user_id=current_user.user_id, movie_id=film_id).first()
+
+    return render_template('film_page.html', film=film, poster_path=poster_path,
+                           user_rating=user_rating, user_logged_in=current_user.is_authenticated)
 
 
 def is_valid_email(email):

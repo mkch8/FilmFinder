@@ -1,6 +1,38 @@
-{% extends "base.html" %}
+{% extends 'base.html' %}
+
+{% block title %}Home - FilmFinder{% endblock %}
 
 {% block content %}
-     <h1>Hello!</h1>
-
+<div class="homepage-wrapper">
+{% if current_user.is_authenticated %}
+    <h1 class="display-4"> Hello {{current_user.username}}!</h1>
+{% else %}
+    <div class="container mt-5">
+        <div class="jumbotron text-center mx-auto">
+            <h1 class="display-4">Welcome to FilmFinder!</h1>
+            <p class="lead">Your go-to site for personalized mood-based film recommendations.</p>
+            <hr class="my-4">
+            <p>Discover new movies based on your taste, the mood of movie you are looking for, and keep track of films you want to watch.</p>
+            <a class="btn btn-primary btn-lg" href="{{ url_for('login') }}" role="button">Login</a>
+            <a class="btn btn-secondary btn-lg" href="{{ url_for('register') }}" role="button">Register</a>
+        </div>
+        <div class="row mt-5">
+            <div class="col-md-4 text-center">
+                <h3>Personalized Recommendations</h3>
+                <p>Get movie recommendations tailored to your taste. Our algorithm learns what you like and suggests films that you'll love.</p>
+            </div>
+            <div class="col-md-4 text-center">
+                <h3>Track Your Films</h3>
+                <p>Keep a list of movies you want to watch and those you've already seen. Never forget a great film again.</p>
+            </div>
+            <div class="col-md-4 text-center">
+                <h3>Share with Friends</h3>
+                <p>Share your favorite movies and recommendations with friends. Discover new films through your social network.</p>
+            </div>
+        </div>
+    </div>
+{% endif %}
+</div>
 {% endblock %}
+
+

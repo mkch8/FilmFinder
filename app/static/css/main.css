@@ -1,9 +1,83 @@
-body {
-  font-family: Arial, sans-serif;
-  background: #fafafa;
-  color: #333333;
-  margin-top: 5rem;
+@import url("https://fonts.googleapis.com/css?family=Poppins:wght@300;400;500;600;700;800;900&display=swap");
+
+/*Login Form*/
+
+.login-container {
+    font-family: Poppins, sans-serif;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 80vh;
 }
+
+.login-form {
+    background: transparent;
+    backdrop-filter: blur(20px);
+    padding: 40px;
+    border-radius: 10px;
+    box-shadow: 0 15px 25px rgba(0, 0, 0, 0.5);
+    width: 350px;
+}
+
+.login-form h1 {
+    text-align: center;
+    color: #333;
+}
+
+.form-field {
+    position: relative;
+    margin: 20px 0;
+}
+
+.input-container {
+    padding-bottom: 10px
+}
+
+.input-box {
+    width: 100%;
+    padding: 10px 10px 10px 35px;
+    border-radius: 5px;
+    border: 1px solid #ccc;
+}
+
+.error {
+    color: red;
+    font-size: 0.75rem;
+    display: block;
+}
+
+.login-button {
+    background: white;
+    color: black;
+    border: none;
+    padding: 10px;
+    width: 100%;
+    border-radius: 20px;
+    cursor: pointer;
+    font-size: 1rem;
+    font-weight: bold;
+}
+
+.login-remember {
+    padding-bottom: 10px;
+    color: white;
+}
+
+.remember-me-label {
+    margin-left: 5px;
+}
+
+.register-link p a {
+    color: white;
+    text-align: center;
+    font-size: 14px;
+}
+
+.register-link p a:hover {
+    text-decoration: underline;
+}
+
+/*General*/
 
 h1, h2, h3, h4, h5, h6 {
   color: #444444;
@@ -14,7 +88,7 @@ h1, h2, h3, h4, h5, h6 {
 }
 
 body {
-    background-color: white;
+    background: linear-gradient(135deg, #5f2c82, #49a09d);
     font-family: 'Roboto', sans-serif;
     color: black;
     margin: 0;

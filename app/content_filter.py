@@ -2,11 +2,12 @@ from sklearn.feature_extraction.text import TfidfVectorizer
 from sklearn.metrics.pairwise import cosine_similarity
 import pandas as pd
 import numpy as np
-from app import db, UserRatings, Films
+from app import app
+from app.models import UserRatings, Films
 
 
 def get_user_liked_movies(user_id, min_rating=6):
-    liked_movies = db.session.query(UserRatings).filter(UserRatings.user_id == user_id, UserRatings.rating >= min_rating).all()
+    liked_movies = UserRatings.query.filter(UserRatings.user_id == user_id, UserRatings.rating >= min_rating).all()
     liked_movie_ids = [rating.movie_id for rating in liked_movies]
     return liked_movie_ids
 
@@ -20,16 +21,15 @@ def get_movie_recommendations(user_id, min_rating=6, num_recommendations=10):
     # Get all movies
     movies = Films.query.all()
     movies_df = pd.DataFrame(
-        [(movie.movie_id, movie.title, movie.genres, movie.keywords, movie.cast, movie.director) for movie in movies],
-        columns=['movie_id', 'title', 'genres', 'keywords', 'cast', 'director'])
+        [(movie.movie_id, movie.title, movie.genres, movie.keywords, movie.overview) for movie in movies],
+        columns=['movie_id', 'title', 'genres', 'keywords', 'overview'])
 
-    # Combine features into a single string
+    # Combine features into single string
     def combine_features(row):
-        return f"{row['genres']} {row['keywords']} {row['cast']} {row['director']}"
+        return f"{row['genres']} {row['keywords']} {row['overview']}"
 
     movies_df['combined_features'] = movies_df.apply(combine_features, axis=1)
 
-    # Use TF-IDF vectorizer
     tfidf_vectorizer = TfidfVectorizer(stop_words='english')
     tfidf_matrix = tfidf_vectorizer.fit_transform(movies_df['combined_features'])
 
@@ -44,7 +44,7 @@ def get_movie_recommendations(user_id, min_rating=6, num_recommendations=10):
     for idx in liked_indices:
         similarity_scores += cosine_sim[idx]
 
-    # Average the similarity scores
+    # average similarity scores
     similarity_scores /= len(liked_indices)
 
     # Get movie indices sorted by similarity scores
@@ -57,5 +57,10 @@ def get_movie_recommendations(user_id, min_rating=6, num_recommendations=10):
     top_movie_indices = movie_indices[:num_recommendations]
 
     recommendations = movies_df.iloc[top_movie_indices]
-    return recommendations['title'].tolist()
+    return recommendations['movie_id'].tolist()
+
+
+# # Testing functionality
+# with app.app_context():
+#     print(get_movie_recommendations(1))
 

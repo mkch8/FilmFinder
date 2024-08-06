@@ -14,9 +14,9 @@ h1, h2, h3, h4, h5, h6 {
 }
 
 body {
-    background-color: #428bca;
+    background-color: white;
     font-family: 'Roboto', sans-serif;
-    color: white;
+    color: black;
     margin: 0;
     padding: 0;
 }
@@ -191,12 +191,68 @@ a.article-title:hover {
     background-color: #f9f9f9;
 }
 
+.grid-item:hover {
+    text-align: center;
+    border: 3px solid #32B400;
+}
+
 .grid-item img {
     max-width: 100%;
     height: auto;
+    border-radius: 3px
 }
 
 .grid-item h3 {
-    font-size: 1.2em;
+    font-size: 1.1em;
     margin: 10px 0;
+}
+
+/*Film page*/
+.film-page-container-1 {
+    display: flex;
+    align-items: flex-start;
+    gap: 20px;
+    padding: 20px;
+}
+
+.film-page-poster-container {
+    flex: 1
+}
+
+.film-page-description-container {
+    flex: 2
+}
+
+.film-page-poster {
+    border-radius: 5px
+}
+
+/*Recommendations*/
+.recommend-container {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 20px;
+}
+
+.recommend-item {
+    display: flex;
+    align-items: flex-start;
+    gap: 20px;
+    max-width: 800px;
+}
+
+.recommend-image-container {
+    flex-shrink: 0;
+    width: 150px;
+}
+
+.recommend-description-container {
+    flex-grow: 1;
+}
+
+.recommend-poster {
+    border-radius: 5px;
+    width: 100%;
+    height: auto;
 }

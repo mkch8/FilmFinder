@@ -4,6 +4,7 @@ from app.forms import (LoginForm, RegistrationForm)
 from app.models import User, UserRatings, Films
 from flask_login import current_user, login_user, logout_user, login_required
 from urllib.parse import urlsplit
+from app.content_filter import get_movie_recommendations
 from uuid import uuid4
 from werkzeug.utils import secure_filename
 from werkzeug.security import generate_password_hash
@@ -80,6 +81,10 @@ def search():
 @app.route('/recommend', methods=['GET', 'POST'])
 @login_required
 def recommend():
+    if request.method == 'POST':
+        recommendations = get_movie_recommendations(current_user.user_id)
+        films = Films.query.filter(Films.movie_id.in_(recommendations)).all()
+        return render_template('recommend.html', title='Recommend', films=films)
     return render_template('recommend.html', title='Recommend')
 
 

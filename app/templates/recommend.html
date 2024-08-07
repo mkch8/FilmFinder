@@ -6,11 +6,14 @@
     <title>Recommend</title>
 </head>
 <body>
-    <h1>Recommend</h1>
     {% if not films %}
-    <form method = 'POST'>
-        <button type="submit">Recommend Movies</button>
-    </form>
+    <div class="recommend-info-container">
+        <h1 class="recommend-h1">Want something to watch? Select the mood below and click Recommend!</h1>
+        <p>The recommendation algorithm will find films for you to watch based on mood, as well as your tastes!</p>
+        <form method = 'POST'>
+            <button class="recommend-button" type="submit">Recommend Movies</button>
+        </form>
+    </div>
     {% endif %}
     {% if films %}
     <div class="recommend-container">

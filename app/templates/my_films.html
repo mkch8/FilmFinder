@@ -6,15 +6,26 @@
     <title>My Films</title>
 </head>
 <body>
-    <h1>My Rated Films</h1>
     <div class="grid-container">
         {% for film in films %}
         <div class="grid-item">
             <a href="{{ url_for('film_page', film_id=film.movie_id) }}">
                 <img src="https://image.tmdb.org/t/p/w500/{{ film.poster_path }}" alt="{{ film.title }} Poster">
             </a>
-            <h3>{{ film.title }}</h3>
-            <p>My Rating: {{ ratings_dict[film.movie_id] }}</p>
+            <div class="star-container">
+<!--                Full stars-->
+                {% for _ in range(ratings_dict[film.movie_id] // 2) %}
+                    <i class='bx bxs-star'></i>
+                {% endfor %}
+<!--                Half stars-->
+                {% for _ in range(ratings_dict[film.movie_id] % 2) %}
+                    <i class='bx bxs-star-half'></i>
+                {% endfor %}
+<!--                Empty stars-->
+                {% for _ in range((10 - ratings_dict[film.movie_id]) // 2) %}
+                    <i class='bx bx-star' ></i>
+                {% endfor %}
+            </div>
         </div>
         {% endfor %}
     </div>

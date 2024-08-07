@@ -89,7 +89,8 @@ h1, h2, h3, h4, h5, h6 {
 
 body {
     background: linear-gradient(135deg, #5f2c82, #49a09d);
-    font-family: 'Roboto', sans-serif;
+    min-height: 100vh;
+    font-family: Poppins, sans-serif;
     color: black;
     margin: 0;
     padding: 0;
@@ -253,16 +254,14 @@ a.article-title:hover {
 
 .grid-container {
     display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+    grid-template-columns: repeat(auto-fill, minmax(100px, 1fr));
     gap: 10px;
     padding: 10px;
 }
 
 .grid-item {
     text-align: center;
-    border: 1px solid #ddd;
-    padding: 10px;
-    background-color: #f9f9f9;
+    background-color: transparent;
 }
 
 .grid-item:hover {
@@ -273,12 +272,17 @@ a.article-title:hover {
 .grid-item img {
     max-width: 100%;
     height: auto;
-    border-radius: 3px
+    border-radius: 3px;
+    padding-bottom: 3px;
 }
 
 .grid-item h3 {
     font-size: 1.1em;
     margin: 10px 0;
+}
+
+.star-container {
+    color: white;
 }
 
 /*Film page*/
@@ -302,6 +306,43 @@ a.article-title:hover {
 }
 
 /*Recommendations*/
+.recommend-info-container {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    height: 50vh;
+}
+
+.recommend-info-container p {
+    color: white;
+}
+
+.recommend-h1 {
+    color: white;
+    font-family: Poppins, sans-serif
+}
+
+.recommend-button {
+    background: white;
+    color: black;
+    border: none;
+    padding: 10px;
+    width: 250px;
+    border-radius: 20px;
+    cursor: pointer;
+    font-size: 1rem;
+    font-weight: bold;
+    justify-content: center;
+    align-items: center;
+    transition: background-color 0.5s;
+}
+
+.recommend-button:hover {
+    color: white;
+    background: #00b40b;
+}
+
 .recommend-container {
     display: flex;
     flex-direction: column;

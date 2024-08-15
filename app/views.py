@@ -82,7 +82,10 @@ def search():
 @login_required
 def recommend():
     if request.method == 'POST':
-        recommendations = get_movie_recommendations(current_user.user_id)
+        mood = request.form.get('mood')
+        if mood == 'none':
+            mood = None
+        recommendations = get_movie_recommendations(current_user.user_id, 6, mood)
         films = Films.query.filter(Films.movie_id.in_(recommendations)).all()
         return render_template('recommend.html', title='Recommend', films=films)
     return render_template('recommend.html', title='Recommend')

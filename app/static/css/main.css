@@ -7,7 +7,7 @@
     display: flex;
     justify-content: center;
     align-items: center;
-    height: 80vh;
+    height: 60vh;
 }
 
 .login-form {
@@ -78,11 +78,6 @@
 }
 
 /*General*/
-
-h1, h2, h3, h4, h5, h6 {
-  color: #444444;
-}
-
 .bg-steel {
   background-color: #5f788a;
 }
@@ -91,7 +86,7 @@ body {
     background: linear-gradient(135deg, #5f2c82, #49a09d);
     min-height: 100vh;
     font-family: Poppins, sans-serif;
-    color: black;
+    color: white;
     margin: 0;
     padding: 0;
 }
@@ -100,6 +95,8 @@ body {
     display: flex;
     justify-content: space-around;
 }
+
+/*Navbar*/
 
 .navbar {
     background-color: #333333 !important; /* Override the background color */
@@ -120,26 +117,20 @@ body {
 
 .navbar-nav .nav-link:hover {
     color: white; !important
-    /*background-color: #575757;*/
-    /*border-radius: 5px;*/
+    font-weight: bold;
 }
 
 .form-control {
     margin-right: 10px;
+    border-radius: 25px;
 }
 
 .btn-outline-success {
     color: white !important;
-    border-color: white !important;
-}
-
-.btn-outline-success:hover {
-    background-color: white !important;
-    color: #333 !important;
+    border-color: #333333;
 }
 
 .jumbotron {
-    background-color: #f8f9fa;
     padding: 2rem 1rem;
     margin-bottom: 2rem;
     border-radius: .3rem;
@@ -157,17 +148,6 @@ body {
     margin-top: 1.5rem;
     font-size: 1.75rem;
 }
-
-.container p {
-    font-size: 1.1rem;
-    color: #555;
-}
-
-/*@media (max-width: 576px) {*/
-/*    .navbar-nav {*/
-/*        flex-direction: column;*/
-/*    }*/
-/*}*/
 
 .content-section {
   background: #ffffff;
@@ -253,10 +233,11 @@ a.article-title:hover {
 /*My films page*/
 
 .grid-container {
+    color: white;
     display: grid;
     grid-template-columns: repeat(auto-fill, minmax(100px, 1fr));
     gap: 10px;
-    padding: 10px;
+    padding-top: 30px;
 }
 
 .grid-item {
@@ -287,10 +268,16 @@ a.article-title:hover {
 
 /*Film page*/
 .film-page-container-1 {
+    color: white;
     display: flex;
+    flex-direction: column;
     align-items: flex-start;
     gap: 20px;
     padding: 20px;
+}
+
+.film-page-content-container {
+    display: flex;
 }
 
 .film-page-poster-container {
@@ -311,7 +298,7 @@ a.article-title:hover {
     flex-direction: column;
     justify-content: center;
     align-items: center;
-    height: 50vh;
+    height: 60vh;
 }
 
 .recommend-info-container p {
@@ -323,12 +310,91 @@ a.article-title:hover {
     font-family: Poppins, sans-serif
 }
 
+.mood-button-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 20px;
+}
+
+.mood-button-row {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+}
+
+.mood-button-row label {
+    border: none;
+    width: 90px;
+    border-radius: 15px;
+    color: white;
+    margin: 5px;
+    cursor: pointer;
+    box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+    transition: background-color 0.3s;
+    text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.5);
+    display: inline-block;
+    text-align: center;
+}
+
+.mood-button-row label:hover {
+    transform: scale(1.1);
+    box-shadow: 0 8px 16px rgba(0,0,0,0.2);
+}
+
+.mood-button-row input[type="radio"] {
+    display: none;
+}
+
+.mood-button-row input[type="radio"]:checked+label {
+    box-shadow: 0 8px 16px rgba(0,0,0,0.2);
+    border: 3px solid #fff;
+}
+
+.mb-joy {
+    background-color: #ffed18;
+}
+
+.mb-sadness {
+    background-color: #00b8ff;
+}
+
+.mb-anger {
+    background-color: #ff2b1a;
+}
+
+.mb-disgust {
+    background-color: #1ea109;
+}
+
+.mb-fear {
+    background-color: #b13fc7;
+}
+
+.mb-surprise {
+    background-color: #ff7800;
+}
+
+.mb-neutral {
+    background-color: #7b7976;
+}
+
+.mb-none {
+    background-color: black;
+}
+
+.recommend-button-container {
+    padding: 25px;
+}
+
 .recommend-button {
+    display: flex;
     background: white;
     color: black;
     border: none;
-    padding: 10px;
     width: 250px;
+    height: 40px;
     border-radius: 20px;
     cursor: pointer;
     font-size: 1rem;

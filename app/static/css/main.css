@@ -145,7 +145,6 @@ body {
 }
 
 .container h3 {
-    margin-top: 1.5rem;
     font-size: 1.75rem;
 }
 
@@ -303,11 +302,18 @@ a.article-title:hover {
 
 .recommend-info-container p {
     color: white;
+    text-align: left;
+    width: 100%;
 }
 
 .recommend-h1 {
     color: white;
     font-family: Poppins, sans-serif
+}
+
+.recommend-p {
+    text-align: left;
+    width: 100%;
 }
 
 .mood-button-container {
@@ -414,18 +420,23 @@ a.article-title:hover {
     flex-direction: column;
     align-items: flex-start;
     gap: 20px;
+    padding-top: 20px;
 }
 
 .recommend-item {
     display: flex;
     align-items: flex-start;
     gap: 20px;
+    width: 800px;
     max-width: 800px;
+    background-color: #f1f1f122;
+    padding: 20px;
+    border-radius: 10px;
 }
 
 .recommend-image-container {
     flex-shrink: 0;
-    width: 150px;
+    width: 100px;
 }
 
 .recommend-description-container {

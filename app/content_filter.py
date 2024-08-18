@@ -12,7 +12,7 @@ def get_user_liked_movies(user_id, min_rating):
     return liked_movie_ids
 
 
-def get_movie_recommendations(user_id, min_rating, mood, num_recommendations=10,):
+def get_movie_recommendations(user_id, min_rating, mood, num_recommendations=5,):
     liked_movie_ids = get_user_liked_movies(user_id, min_rating)
 
     if not liked_movie_ids:

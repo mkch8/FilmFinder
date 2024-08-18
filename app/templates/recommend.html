@@ -9,7 +9,7 @@
     {% if not films %}
     <div class="recommend-info-container">
         <h1 class="recommend-h1">Want something to watch? </br> Select the mood below and click Recommend!</h1>
-        <p>The recommendation algorithm will find films for you to watch based on mood, as well as your tastes!</p>
+        <p class="recommend-p">The recommendation algorithm will find films for you to watch based on mood, as well as your tastes!</p>
         <form method='POST' id="mood-form">
             <div class="mood-button-container">
                 <div class="mood-button-row">
@@ -55,9 +55,7 @@
                 </a>
             </div>
             <div class="recommend-description-container">
-                <h3>{{ film.title }}</h3>
-                <p><strong>Release Date:</strong> {{ film.release_date }}</p>
-                <p>{{ film.overview }}</p>
+                <h3>{{ film.title }} ({{ film.release_date.strftime('%Y') }})</h3>
             </div>
         </div>
         {% endfor %}

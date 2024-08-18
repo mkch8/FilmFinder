@@ -68,7 +68,7 @@ class Films(db.Model):
     mood = db.Column(db.String(20))
 
     def __repr__(self):
-        return f"user film(id='{self.user_id}', '{self.movie_id}')"
+        return f"user film(id='{self.movie_id}', title='{self.title}', release_date='{self.release_date}')"
 
 
 class UserRatings(db.Model):

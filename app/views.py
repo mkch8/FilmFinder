@@ -5,6 +5,7 @@ from app.models import User, UserRatings, Films
 from flask_login import current_user, login_user, logout_user, login_required
 from urllib.parse import urlsplit
 from app.content_filter import get_movie_recommendations
+from app.svd_filter import get_recommendations, load_data, train_model
 from uuid import uuid4
 from werkzeug.utils import secure_filename
 from werkzeug.security import generate_password_hash
@@ -85,8 +86,16 @@ def recommend():
         mood = request.form.get('mood')
         if mood == 'none':
             mood = None
-        recommendations = get_movie_recommendations(current_user.user_id, 6, mood)
+        # get content based recommendations
+        content_recommendations = get_movie_recommendations(current_user.user_id, 6, mood)
+        # get collaborative based recommendations
+        ratings_df, films_df = load_data()
+        svd_model = train_model(ratings_df)
+        svd_recommendations = get_recommendations(current_user.user_id, svd_model, ratings_df, films_df, mood)
+        # combine recommendations
+        recommendations = content_recommendations + svd_recommendations
         films = Films.query.filter(Films.movie_id.in_(recommendations)).all()
+        print(films)
         return render_template('recommend.html', title='Recommend', films=films)
     return render_template('recommend.html', title='Recommend')
 

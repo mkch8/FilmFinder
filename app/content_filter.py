@@ -52,7 +52,9 @@ def get_movie_recommendations(user_id, min_rating, mood, num_recommendations=5,)
 
     # filter out the liked movies (so we don't recommend movies already watched)
     movie_indices = [i for i in movie_indices if movies_df['movie_id'].iloc[i] not in liked_movie_ids]
-    movie_indices = [i for i in movie_indices if movies_df['mood'].iloc[i] == mood]
+    # filter for mood if provided
+    if mood:
+        movie_indices = [i for i in movie_indices if movies_df['mood'].iloc[i] == mood]
 
     # get top n recommendations
     top_movie_indices = movie_indices[:num_recommendations]

@@ -17,6 +17,8 @@ import csv
 @app.route('/')
 @app.route('/index')
 def index():
+    if current_user.is_authenticated:
+        return render_template('recommend.html')
     return render_template('index.html')
 
 
@@ -31,7 +33,7 @@ def login():
             flash('Invalid username or password', 'danger')
             return redirect(url_for('login'))
         login_user(user, remember=form.remember_me.data)
-        flash(f'Login for {form.username.data}', 'success')
+        # flash(f'Login for {form.username.data}', 'success')
         next_page = request.args.get('next')
         if not next_page or urlsplit(next_page).netloc != '':
             next_page = url_for('index')
@@ -72,8 +74,8 @@ def register():
 def search():
     query = request.args.get('query')
     if query:
-        results = Films.query.filter(Films.title.ilike(f'%{query}%')).all()
-        results = [{"id": film.movie_id, "title": film.title} for film in results]
+        results = Films.query.filter(Films.title.ilike(f'%{query}%')).limit(5).all()
+        results = [{"id": film.movie_id, "title": f"{film.title} ({film.release_date.strftime('%Y')})"} for film in results]
     else:
         results = []
     return jsonify(results)
@@ -88,15 +90,19 @@ def recommend():
             mood = None
         # get content based recommendations
         content_recommendations = get_movie_recommendations(current_user.user_id, 6, mood)
+        print(content_recommendations)
         # get collaborative based recommendations
         ratings_df, films_df = load_data()
         svd_model = train_model(ratings_df)
         svd_recommendations = get_recommendations(current_user.user_id, svd_model, ratings_df, films_df, mood)
+        print(svd_recommendations)
         # combine recommendations
         recommendations = content_recommendations + svd_recommendations
         films = Films.query.filter(Films.movie_id.in_(recommendations)).all()
-        print(films)
-        return render_template('recommend.html', title='Recommend', films=films)
+        films_sorted = sorted(films, key=lambda x: recommendations.index(x.movie_id))
+        return render_template('recommend.html', title='Recommend', films=films_sorted, mood=mood)
+
+
     return render_template('recommend.html', title='Recommend')
 
 

@@ -12,6 +12,7 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
 <!--    CSS Stylesheet link-->
     <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/main.css') }}">
+<!--    Boxicons-->
     <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
     {% if title %}
     <title>{{ title }}</title>
@@ -19,7 +20,7 @@
     <title>FilmFinder</title>
     {% endif %}
 </head>
-<body>
+<body class="{% block body_class %}{% endblock %}">
 <header class="site-header">
     <nav class="navbar navbar-expand-sm navbar-dark bg-dark">
         <div class="container-fluid">
@@ -38,6 +39,14 @@
                     <li class="nav-item">
                         <a class="nav-link" href="{{ url_for('about') }}">ABOUT</a>
                     </li>
+                    {% if current_user.is_anonymous %}
+                    <li class="nav-item">
+                        <a class="nav-link" href="{{ url_for('login') }}">SIGN IN</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="{{ url_for('register') }}">REGISTER</a>
+                    </li>
+                    {% endif %}
                     {% if not current_user.is_anonymous %}
                     <li class="nav-item">
                         <a class="nav-link" href="{{ url_for('logout') }}">LOGOUT</a>
@@ -49,7 +58,7 @@
                         <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search" id="search-input">
                         <div id="search-results"></div>
                     </div>
-                    <button class="btn btn-outline-success" type="submit">
+                    <button class="search-button" type="submit">
                         <i class="fas fa-search"></i>
                     </button>
                 </form>

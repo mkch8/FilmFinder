@@ -8,8 +8,9 @@
 <body>
     {% if not films %}
     <div class="recommend-info-container">
-        <h1 class="recommend-h1">Want something to watch? </br> Select the mood below and click Recommend!</h1>
-        <p class="recommend-p">The recommendation algorithm will find films for you to watch based on mood, as well as your tastes!</p>
+        <h1 class="recommend-h1">Need something to watch? </br> Select the mood below. </br> Click Recommend!</h1> </br>
+        <p style="width:60%" class="recommend-p">The recommendation algorithm will find films for you to watch based on
+            mood, as well as your tastes!</p>
         <form method='POST' id="mood-form">
             <div class="mood-button-container">
                 <div class="mood-button-row">
@@ -43,10 +44,15 @@
                 </div>
             </div>
         </form>
+        <div class="loader-wrapper" style="display:none">
+            <h3>Generating recommendations, please wait.</h3>
+            <span class="loader"><span class="loader-inner"></span></span>
+        </div>
     </div>
     {% endif %}
     {% if films %}
     <div class="recommend-container">
+        <h3>We think you'll like these films based on the mood "{{ mood }}"</h3>
         {% for film in films %}
         <div class="recommend-item">
             <div class="recommend-image-container">
@@ -55,12 +61,20 @@
                 </a>
             </div>
             <div class="recommend-description-container">
-                <h3>{{ film.title }} ({{ film.release_date.strftime('%Y') }})</h3>
+                <h3><a href="{{ url_for('film_page', film_id=film.movie_id) }}">{{ film.title }} ({{ film.release_date.strftime('%Y') }})</a></h3>
+                {% if film.genres %}
+                    <div class="recommend-genre-container">
+                    {% for genre in film.genres.split(',') %}
+                        <div class="recommend-genre">
+                            <p>{{ genre.strip() }}</p>
+                        </div>
+                    {% endfor %}
+                    </div>
+                {% endif %}
             </div>
         </div>
         {% endfor %}
     </div>
-    <a href="{{ url_for('index') }}">Back to Home</a>
     {% endif %}
 </body>
 <script src="{{ url_for('static', filename='js/recommend.js') }}"></script>

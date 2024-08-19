@@ -99,9 +99,10 @@ body {
 /*Navbar*/
 
 .navbar {
-    background-color: #333333 !important; /* Override the background color */
+    background-color: #33333399 !important; /* Override the background color */
     padding-left: 3rem;
     padding-right: 3rem;
+    z-index: 1100;
 }
 
 .navbar-brand {
@@ -125,13 +126,14 @@ body {
     border-radius: 25px;
 }
 
-.btn-outline-success {
-    color: white !important;
-    border-color: #333333;
+.search-button {
+    border: none;
+    background-color: transparent;
+    color: white;
 }
 
 .jumbotron {
-    padding: 2rem 1rem;
+    padding-top: 3rem;
     margin-bottom: 2rem;
     border-radius: .3rem;
 }
@@ -142,6 +144,7 @@ body {
 
 .jumbotron .btn-lg {
     margin: 0.5rem;
+    background-color: #00b40b;
 }
 
 .container h3 {
@@ -266,13 +269,19 @@ a.article-title:hover {
 }
 
 /*Film page*/
+.film-page-wrapper {
+    padding-top: 3rem;
+}
+
 .film-page-container-1 {
     color: white;
     display: flex;
     flex-direction: column;
     align-items: flex-start;
-    gap: 20px;
-    padding: 20px;
+    gap: 10px;
+    padding: 50px;
+    background-color: #f1f1f133;
+    border-radius: 5px;
 }
 
 .film-page-content-container {
@@ -291,29 +300,60 @@ a.article-title:hover {
     border-radius: 5px
 }
 
+.rating-btn {
+    border: none;
+    width: 100px;
+    border-radius: 15px;
+    background-color: green;
+    color: white;
+    margin: 5px;
+    cursor: pointer;
+    box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+    transition: background-color 0.3s;
+    text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.5);
+    display: inline-block;
+    text-align: center;
+}
+
+.rating-btn:hover {
+    background-color: darkgreen;
+    transform: scale(110%)
+}
+
 /*Recommendations*/
 .recommend-info-container {
     display: flex;
     flex-direction: column;
     justify-content: center;
     align-items: center;
-    height: 60vh;
+    height: 80vh;
 }
 
 .recommend-info-container p {
     color: white;
-    text-align: left;
+    text-align: center;
     width: 100%;
 }
 
 .recommend-h1 {
     color: white;
+    text-align: center;
     font-family: Poppins, sans-serif
 }
 
 .recommend-p {
-    text-align: left;
+    text-align: center;
     width: 100%;
+}
+
+.recommend-description-container h3 a {
+    color: inherit;
+    text-decoration: none;
+    font-weight: bold;
+}
+
+.recommend-description-container h3 a:hover {
+    color: #00b40b;
 }
 
 .mood-button-container {
@@ -435,8 +475,14 @@ a.article-title:hover {
 }
 
 .recommend-image-container {
+    border: 5px solid transparent;
+    transition: border-color 0.3s ease;
     flex-shrink: 0;
     width: 100px;
+}
+
+.recommend-image-container:hover {
+    border-color: #00b40b;
 }
 
 .recommend-description-container {
@@ -447,4 +493,95 @@ a.article-title:hover {
     border-radius: 5px;
     width: 100%;
     height: auto;
+}
+
+.recommend-genre-container {
+    padding-top: 15px;
+    display: flex;
+    flex-direction: row;
+    gap: 10px;
+}
+
+.recommend-genre {
+    background-color: #444444;
+    border-radius: 15px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 5px 10px;
+}
+
+.recommend-genre p {
+    margin: 0;
+    text-align: center;
+}
+
+/*Loading animation*/
+.loader-wrapper {
+    width: 100%;
+    height: 100%;
+    position: absolute;
+    top: 0;
+    left: 0;
+    background: linear-gradient(135deg, #5f2c82, #49a09d);
+    display:flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    z-index: 1000;
+    padding-bottom: 150px;
+}
+
+.loader-wrapper h3 {
+    padding-bottom: 30px;
+}
+
+.loader {
+    display: inline-block;
+    width: 30px;
+    height: 30px;
+    position: relative;
+    border: 4px solid #Fff;
+    animation: loader 2s infinite ease;
+}
+
+.loader-inner {
+    vertical-align: top;
+    display: inline-block;
+    width: 100%;
+    background-color: #fff;
+    animation: loader-inner 2s infinite ease-in;
+}
+
+@keyframes loader {
+    0% { transform: rotate(0deg);}
+    25% { transform: rotate(180deg);}
+    50% { transform: rotate(180deg);}
+    75% { transform: rotate(360deg);}
+    100% { transform: rotate(360deg);}
+}
+
+@keyframes loader-inner {
+    0% { height: 0%;}
+    25% { height: 0%;}
+    50% { height: 100%;}
+    75% { height: 100%;}
+    100% { height: 0%;}
+}
+
+/*About page*/
+.aboutpage-wrapper {
+    display: flex;
+    justify-content: center;
+    padding-top: 3rem;
+}
+
+.about-container {
+    max-width: 650px;
+    align-items: center;
+    justify-content: center;
+}
+
+.about-item p {
+    text-align: justify;
 }

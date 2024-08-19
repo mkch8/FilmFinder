@@ -1,6 +1,37 @@
 {% extends "base.html" %}
 
 {% block content %}
-     <h1>Hello user</h1>
+     <div class="aboutpage-wrapper">
+          <div class="about-container">
+               <h2>ABOUT FILMFINDER</h2>
+               <hr class="my-4">
+               <div class="about-item">
+                    <h4>What is FilmFinder?</h4>
+                    <p> FilmFinder is a film recommendation website. You can select a mood, and an algorithm will
+                         generate films for you to watch based on the chosen mood. Not only that, it will compare the
+                         films you've watched to our database of movies and the preferences of other users.
+                    </p>
+               </div>
+               <hr class="my-4">
+               <div class="about-item">
+                    <h4>Do I need to create an account to use FilmFinder?</h4>
+                    <p>
+                         Yes, you will need to create an account to use FilmFinder as the algorithm takes into account
+                         your preferences.
+                    </p>
+               </div>
+               <hr class="my-4">
+               <div class="about-item">
+                    <h4>How does the algorithm work?</h4>
+                    <p>
+                         The mood of each film is generated using a transformer model through analysing each film's
+                         genre, overview and keywords. When a mood is selected, we filter movies for the specified mood
+                         and combine this with content-based filtering and collaborative filtering. In simpler terms,
+                         we compare what you have liked in the past to similar movies, but also compare your interests
+                         to other users in the database.
+                    </p>
+               </div>
+          </div>
+     </div>
 
 {% endblock %}

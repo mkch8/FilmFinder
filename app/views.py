@@ -85,6 +85,15 @@ def search():
 @login_required
 def recommend():
     if request.method == 'POST':
+        high_rating_count = UserRatings.query.filter_by(user_id=current_user.user_id).filter(
+            UserRatings.rating >= 6).count()
+
+        if high_rating_count < 5:
+            flash(
+                'Please "like" at least 5 movies before generating recommendations! '
+                'Liking a movie is giving it a rating of 6 or more.')
+            return redirect(url_for('recommend'))
+
         mood = request.form.get('mood')
         if mood == 'none':
             mood = None

@@ -4,19 +4,19 @@ from app import app, Films, db
 emotion_classifier = pipeline('sentiment-analysis', model='j-hartmann/emotion-english-distilroberta-base')
 
 
-# Analyze text for mood
+# analyze text for mood
 def analyze_text(text):
     result = emotion_classifier(text)
     return result[0]['label'] if result else 'neutral'
 
 
-# Get combined text for analysis
+# get combined text for analysis (movie's overview, genre and keywords)
 def get_combined_text(movie):
     combined_text = f"{movie.overview} {movie.genres} {movie.keywords}"
     return combined_text
 
 
-# Update movie moods in database
+# update movie moods in database
 def update_movie_moods():
     with app.app_context():
         movies = Films.query.all()

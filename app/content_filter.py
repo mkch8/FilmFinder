@@ -18,7 +18,6 @@ def get_movie_recommendations(user_id, min_rating, mood, num_recommendations=5,)
     if not liked_movie_ids:
         return []
 
-    # Get all movies
     movies = Films.query.all()
     movies_df = pd.DataFrame(
         [(movie.movie_id, movie.title, movie.genres, movie.keywords, movie.overview, movie.mood) for movie in movies],
@@ -63,7 +62,8 @@ def get_movie_recommendations(user_id, min_rating, mood, num_recommendations=5,)
     return recommendations['movie_id'].tolist()
 
 
-# # Testing functionality
-# with app.app_context():
-#     print(get_movie_recommendations(1))
+# test script
+if __name__ == "__main__":
+    with app.app_context():
+        print(get_movie_recommendations(1))
 

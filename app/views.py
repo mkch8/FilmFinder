@@ -6,12 +6,8 @@ from flask_login import current_user, login_user, logout_user, login_required
 from urllib.parse import urlsplit
 from app.content_filter import get_movie_recommendations
 from app.svd_filter import get_recommendations, load_data, train_model
-from uuid import uuid4
-from werkzeug.utils import secure_filename
 from werkzeug.security import generate_password_hash
-import os
 from email_validator import validate_email, EmailNotValidError
-import csv
 
 
 @app.route('/')
@@ -111,7 +107,6 @@ def recommend():
         films_sorted = sorted(films, key=lambda x: recommendations.index(x.movie_id))
         return render_template('recommend.html', title='Recommend', films=films_sorted, mood=mood)
 
-
     return render_template('recommend.html', title='Recommend')
 
 
@@ -130,6 +125,7 @@ def my_films():
 @app.route('/about', methods=['GET', 'POST'])
 def about():
     return render_template('about.html')
+
 
 @app.route('/film/<int:film_id>', methods=['GET', 'POST'])
 def film_page(film_id):
@@ -162,23 +158,3 @@ def is_valid_email(email):
         return False
     return True
 
-
-# Attempt to remove a file but silently cancel any exceptions if anything goes wrong
-def silent_remove(filepath):
-    try:
-        os.remove(filepath)
-    except:
-        pass
-    return
-
-
-# Handler for 413 Error: "RequestEntityTooLarge". This error is caused by a file upload
-# exceeding its permitted Capacity
-# Note, you should add handlers for:
-# 403 Forbidden
-# 404 Not Found
-# 500 Internal Server Error
-# See: https://en.wikipedia.org/wiki/List_of_HTTP_status_codes
-@app.errorhandler(413)
-def error_413(error):
-    return render_template('errors/413.html'), 413

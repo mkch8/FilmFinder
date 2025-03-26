@@ -11,19 +11,17 @@ FilmFinder is a mood-based movie recommendation web application that enhances tr
 ## Tech Stack
 - **Frontend**: HTML, CSS, JavaScript (Vanilla)
 - **Backend**: Python (Flask)
-- **Database**: SQLite (or any other configured DB)
+- **Database**: SQLite
 
 ## Installation
 ### Prerequisites
 Ensure you have the following installed:
-- Python 3.x
-- pip (Python package manager)
-- Virtual environment (optional but recommended)
+- Python 3.11
 
 ### Setup
 1. Clone the repository:
    ```sh
-   git clone https://github.com/yourusername/filmfinder.git
+   git clone https://github.com/mkch8/filmfinder.git
    cd filmfinder
    ```
 2. Create and activate a virtual environment:
@@ -55,7 +53,4 @@ Ensure you have the following installed:
 - Integration with streaming service links.
 - Custom weighting for mood influence.
 - Sorting and filtering options for recommendations.
-
-## License
-This project is licensed under the MIT License.
 
